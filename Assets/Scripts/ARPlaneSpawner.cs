@@ -4,12 +4,13 @@ using System.Collections.Generic;
 
 public class ARPlaneSpawner : MonoBehaviour
 {
-    public GameObject monsterPrefab;
+    [Tooltip("Monster prefab")]
+    public GameObject[] monsterPrefabs;
     public ARPlaneManager planeManager;
 
     public void SpawnOnRandomPlane()
     {
-        // Gather all planes manually from the TrackableCollection (I'm unsure if I did this right)
+        // Collect all tracked planes
         List<ARPlane> planes = new List<ARPlane>();
         foreach (var plane in planeManager.trackables)
         {
@@ -23,7 +24,7 @@ public class ARPlaneSpawner : MonoBehaviour
             return;
         }
 
-        // Pick a random plane and spawn the monster near its center
+        // Choose a random plane
         ARPlane randomPlane = planes[Random.Range(0, planes.Count)];
         Vector3 randomPoint = randomPlane.center + new Vector3(
             Random.Range(-0.5f, 0.5f),
@@ -31,6 +32,15 @@ public class ARPlaneSpawner : MonoBehaviour
             Random.Range(-0.5f, 0.5f)
         );
 
-        Instantiate(monsterPrefab, randomPoint, Quaternion.identity);
+        // Monster prefabs
+        if (monsterPrefabs.Length > 0)
+        {
+            GameObject randomMonster = monsterPrefabs[Random.Range(0, monsterPrefabs.Length)];
+            Instantiate(randomMonster, randomPoint, Quaternion.identity);
+        }
+        else
+        {
+            Debug.LogWarning("No monster prefabs assigned!");
+        }
     }
 }

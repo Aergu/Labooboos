@@ -770,7 +770,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a09857726519aff4b8ab13b63e69ef00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  monsterPrefab: {fileID: 5177753285598656382, guid: dad0e64c41ddb654085565909b0c6819, type: 3}
+  monsterPrefabs:
+  - {fileID: 5177753285598656382, guid: dad0e64c41ddb654085565909b0c6819, type: 3}
+  - {fileID: 2960960768233852577, guid: 8a223b3c3b8d1f443b28e2c854081dfe, type: 3}
   planeManager: {fileID: 1923106101}
 --- !u!4 &1923106100
 Transform:
