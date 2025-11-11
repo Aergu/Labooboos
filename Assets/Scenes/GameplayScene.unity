@@ -201,6 +201,11 @@ Transform:
   - {fileID: 1983031281}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &608830356 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2960960768233852577, guid: 8a223b3c3b8d1f443b28e2c854081dfe, type: 3}
+  m_PrefabInstance: {fileID: 800619837336492588}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1147465338
 GameObject:
   m_ObjectHideFlags: 0
@@ -694,8 +699,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeManager: {fileID: 1366935177}
   locationManager: {fileID: 1306880292}
+  arCamera: {fileID: 1236195928}
   planeSpawner: {fileID: 1923106099}
+  spawnDistance: 2
+  checkInterval: 5
   spawnInterval: 10
+  monsterPrefabs:
+  - {fileID: 1984214350}
+  - {fileID: 608830356}
 --- !u!114 &1306880291
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -847,7 +858,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1760703bbd54c04488a8d10600262ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_PlanePrefab: {fileID: 0}
+  m_PlanePrefab: {fileID: 6529020632077634159, guid: 9418b6a9f755f1749822dae1c6e46af0, type: 3}
   m_DetectionMode: -1
 --- !u!114 &1923106102
 MonoBehaviour:
@@ -861,7 +872,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0cb9aa70a22847b5925ee5f067c10a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Camera: {fileID: 0}
+  m_Camera: {fileID: 1236195928}
   m_OriginBaseGameObject: {fileID: 1923106098}
   m_CameraFloorOffsetObject: {fileID: 0}
   m_RequestedTrackingOriginMode: 0
@@ -898,6 +909,11 @@ Transform:
   - {fileID: 1236195923}
   m_Father: {fileID: 182622171}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1984214350 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5177753285598656382, guid: dad0e64c41ddb654085565909b0c6819, type: 3}
+  m_PrefabInstance: {fileID: 2024554346182220342}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &800619837336492588
 PrefabInstance:
   m_ObjectHideFlags: 0

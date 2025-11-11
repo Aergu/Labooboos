@@ -10,8 +10,9 @@ public class TimeManager : MonoBehaviour
    {
       int hour = DateTime.Now.Hour;
 
-      return (nightStartHour > nightEndHour)
-         ? (hour >= nightStartHour || hour < nightEndHour)
-         : (hour >= nightStartHour && hour < nightEndHour);
+      if (nightStartHour > nightEndHour)
+         return hour >= nightStartHour || hour < nightEndHour;
+
+      return hour >= nightStartHour && hour < nightEndHour;
    }
 }
