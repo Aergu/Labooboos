@@ -22,6 +22,21 @@ public class LocationManager : MonoBehaviour
         StartCoroutine(StartLocationService());
     }
 
+    public bool IsNightTime(int nightStartHour = 19, int nightEndHour = 6)
+    {
+        int currentHour = System.DateTime.Now.Hour;
+
+        if (nightStartHour > nightEndHour)
+            return currentHour >= nightStartHour || currentHour < nightEndHour;
+        else
+            return currentHour >= nightStartHour && currentHour < nightEndHour;
+    }
+
+    public bool CanSpawn()
+    {
+        return IsNearSpawnPoint() && IsNightTime();
+    }
+
     IEnumerator StartLocationService()
     {
         if (!Input.location.isEnabledByUser)

@@ -1,15 +1,17 @@
 using UnityEngine;
+using System;
 
 public class TimeManager : MonoBehaviour
 {
-    [Tooltip("Start of night time (24-hour format)")]
-    public int nightStart = 20;
-    [Tooltip("End of night time (24-hour format)")]
-    public int nightEnd = 6;
+   public int nightStartHour;
+   public int nightEndHour;
 
-    public bool IsNightTime()
-    {
-        int hour = System.DateTime.Now.Hour;
-        return hour >= nightStart || hour < nightEnd;
-    }
+   public bool IsNightTime()
+   {
+      int hour = DateTime.Now.Hour;
+
+      return (nightStartHour > nightEndHour)
+         ? (hour >= nightStartHour || hour < nightEndHour)
+         : (hour >= nightStartHour && hour < nightEndHour);
+   }
 }
