@@ -830,6 +830,7 @@ MonoBehaviour:
   monsterPrefabs:
   - {fileID: 5177753285598656382, guid: dad0e64c41ddb654085565909b0c6819, type: 3}
   - {fileID: 2960960768233852577, guid: 8a223b3c3b8d1f443b28e2c854081dfe, type: 3}
+  - {fileID: 353818940512468257, guid: ba3b1c9a847593d4888331768e039c48, type: 3}
   planeManager: {fileID: 1923106101}
 --- !u!4 &1923106100
 Transform:
