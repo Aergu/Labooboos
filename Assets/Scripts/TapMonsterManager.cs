@@ -7,32 +7,42 @@ public class TapMonsterManager : MonoBehaviour
 
    private void Update()
    {
-       if (Touchscreen.current.primaryTouch.press.isPressed)
+       if (Touchscreen.current != null)
        {
-           Vector2 touchPos = Touchscreen.current.primaryTouch
-               .position.ReadValue();
-           Debug.Log("Touch detected at: " + touchPos);
-           HandleTap(touchPos);
+           var touch = Touchscreen.current.primaryTouch;
+           if (touch.press.wasReleasedThisFrame)
+           {
+               Vector2 touchPos = touch.position.ReadValue();
+               HandleTap(touchPos);
+           }
        }
-
-       if (Mouse.current.leftButton.wasPressedThisFrame)
+       else if (Mouse.current != null &&
+                Mouse.current.leftButton.wasReleasedThisFrame)
        {
            Vector2 mousePos = Mouse.current.position.ReadValue();
-           Debug.Log("Mouse click at: " + mousePos);
            HandleTap(mousePos);
        }
    }
 
   private void HandleTap(Vector2 screenPos)
    {
+       if (arCamera == null)
+       {
+           Debug.LogWarning("AR Camera not assigned!");
+           return;
+       }
+       
        Ray ray = arCamera.ScreenPointToRay(screenPos);
        Debug.DrawRay(ray.origin, ray.direction * 10f, Color.red, 2f);
-       Debug.Log("Ray origin: " + ray.origin + ", direction: " + ray.direction);
 
        if (Physics.Raycast(ray, out RaycastHit hit, 500f, monsterLayer, QueryTriggerInteraction.Collide))
        {
            Debug.Log("Hit: " + hit.collider.name);
            Destroy(hit.collider.gameObject);
+       }
+       else
+       {
+           Debug.Log("Ray missed everything.");
        }
    }
 }
