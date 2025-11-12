@@ -57,6 +57,10 @@ PrefabInstance:
       value: MightyMatilda
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 8e9626582b1a1184a8b3541c0725bbf5, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 8e9626582b1a1184a8b3541c0725bbf5, type: 3}
       propertyPath: m_TagString
       value: Monster
       objectReference: {fileID: 0}
