@@ -1,59 +1,49 @@
-using System;
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
-using Random = UnityEngine.Random;
+
+
 
 public class MonsterSpawner : MonoBehaviour
 {
-    public TimeManager timeManager;
-    public LocationManager locationManager;
-    public Camera arCamera;
-    public ARPlaneSpawner planeSpawner;
+   [Header("Prefabs & Spawn Settings")]public GameObject[] monsterPrefabs;
+   public float spawnInterval, spawnDistance;
+   
+   [Header("References")]
+   public Camera arCamera;
+   public TimeManager timeManager;
+   public LocationManager locationManager;
 
-    public float spawnDistance, checkInterval;
-    public float spawnInterval = 10f;
+   private void Start()
+   {
+      if (arCamera == null || monsterPrefabs == null ||
+          monsterPrefabs.Length == 0 || locationManager == null)
+      {
+         Debug.LogError("MonsterSpawner: one or more references are missing!");
+         enabled = false;
+         return;
+      }
 
-    [Header("Monster Prefabs")] 
-    public GameObject[] monsterPrefabs;
-    private GameObject spawnedMonster;
+      StartCoroutine(SpawnLoop());
+   }
 
-    private float timer;
+   private IEnumerator SpawnLoop()
+   {
+      while (true)
+      {
+         bool canSpawn = timeManager.IsNightTime()
+                         && locationManager.IsNearSpawnPoint();
 
-    private void Start()
-    {
-        if (timeManager == null || arCamera == null || monsterPrefabs.Length == 0)
-        {
-            Debug.LogError("MonsterSpawner references not set!");
-            enabled = false;
-            return;
-        }
-
-        StartCoroutine(SpawnRoutine());
-    }
-
-    IEnumerator SpawnRoutine()
-    {
-        while (true)
-        {
-            bool canSpawn = timeManager.IsNightTime() && locationManager.IsNearSpawnPoint();
-
-            if (canSpawn && spawnedMonster == null)
-            {
-                int index = Random.Range(0, monsterPrefabs.Length);
-                GameObject chosenPrefab = monsterPrefabs[index];
-
-                Vector3 spawnPos = arCamera.transform.position +
-                                   arCamera.transform.forward * spawnDistance;
-                spawnedMonster = Instantiate(chosenPrefab, spawnPos, Quaternion.identity);
-            }
-            else if (!canSpawn && spawnedMonster != null)
-            {
-                Destroy(spawnedMonster);
-                spawnedMonster = null;
-            }
-
-            yield return new WaitForSeconds(checkInterval);
-        }
-    }
+         if (canSpawn)
+         {
+            int index = UnityEngine.Random.Range(0, monsterPrefabs.Length);
+            GameObject prefab = monsterPrefabs[index];
+            
+            Vector3 spawnPos = arCamera.transform.position +
+                               arCamera.transform.forward * spawnDistance;
+            
+            Instantiate(prefab, spawnPos, Quaternion.identity);
+         }
+         yield return new WaitForSeconds(spawnInterval);
+      }
+   }
 }
