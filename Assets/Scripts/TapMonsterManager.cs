@@ -1,9 +1,12 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+
 public class TapMonsterManager : MonoBehaviour
 {
    [Header("Layer for monsters")] public LayerMask monsterLayer;
    public Camera arCamera;
+   public int pointsPerMonster;
+   public ScoreManager scoreManager;
 
    private void Update()
    {
@@ -12,15 +15,13 @@ public class TapMonsterManager : MonoBehaviour
            var touch = Touchscreen.current.primaryTouch;
            if (touch.press.wasReleasedThisFrame)
            {
-               Vector2 touchPos = touch.position.ReadValue();
-               HandleTap(touchPos);
+               HandleTap(touch.position.ReadValue());
            }
        }
        else if (Mouse.current != null &&
                 Mouse.current.leftButton.wasReleasedThisFrame)
        {
-           Vector2 mousePos = Mouse.current.position.ReadValue();
-           HandleTap(mousePos);
+           HandleTap(Mouse.current.position.ReadValue());
        }
    }
 
@@ -35,10 +36,15 @@ public class TapMonsterManager : MonoBehaviour
        Ray ray = arCamera.ScreenPointToRay(screenPos);
        Debug.DrawRay(ray.origin, ray.direction * 10f, Color.red, 2f);
 
-       if (Physics.Raycast(ray, out RaycastHit hit, 500f, monsterLayer, QueryTriggerInteraction.Collide))
+       if (Physics.Raycast(ray, out RaycastHit hit, 500f, monsterLayer))
        {
            Debug.Log("Hit: " + hit.collider.name);
            Destroy(hit.collider.gameObject);
+
+           if (scoreManager != null)
+               scoreManager.AddScore(pointsPerMonster);
+           else
+               Debug.LogWarning("Score Manager isn't assigned!");
        }
        else
        {
