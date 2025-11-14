@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviour
             timer -= Time.deltaTime;
 
             if (timerText != null)
-                timerText.text = "Time: " + Mathf.Ceil(timer);
+                timerText.text = "" + Mathf.Ceil(timer);
             yield return null;
         }
 
